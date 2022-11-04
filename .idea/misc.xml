@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/activity_main.xml" value="0.3546875" />
+        <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_2.xml" value="0.3546875" />
+        <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_account.xml" value="0.3546875" />
+        <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_account2.xml" value="0.3546875" />
+        <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_home.xml" value="0.3546875" />
       </map>
     </option>
   </component>
