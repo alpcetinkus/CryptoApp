@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
     companion object {
-        val BASE_URL = "https://api.coingecko.com/api/v3/"
+        val BASE_URL = "https://api.coingecko.com/"
         fun getApiImplementation(): CryptoApi {
             return getClient(BASE_URL).create(CryptoApi::class.java)
         }
