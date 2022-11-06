@@ -10,29 +10,26 @@
     android:id="@+id/appBarLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    >
+    android:layout_alignParentBottom="true">
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabBackground="@color/white"
+
         app:tabGravity="fill"
         app:tabInlineLabel="true"
         app:tabMode="fixed"/>
+
 </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/viewPager"
-        android:layout_below="@id/appBarLayout"/>
-
-
-
-
-
-
+        />
 
 
 </RelativeLayout>

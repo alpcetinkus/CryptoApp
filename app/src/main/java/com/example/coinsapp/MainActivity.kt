@@ -3,6 +3,9 @@ package com.example.coinsapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.coinsapp.recyclerView.CoinList
+import com.example.coinsapp.recyclerView.CoinListAdapter
 import com.example.coinsapp.retrofit.RetrofitClient
 import com.example.coinsapp.retrofit.models.MarketModel
 import com.example.coinsapp.tabLayouts.AccountFragment
@@ -11,6 +14,7 @@ import com.example.coinsapp.tabLayouts.HomeFragment
 import com.example.coinsapp.tabLayouts.StatisticFragment
 import com.example.coinsapp.tabLayouts.adapter.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_book.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,23 +28,9 @@ class MainActivity : AppCompatActivity() {
 
         setUpTabs()
 
-        Log.e("alp","sorgu atiyorum")
 
-        RetrofitClient.getApiImplementation().getCoinListMarket().enqueue(object : Callback<MarketModel> {
-            override fun onResponse(call: Call<MarketModel>?, response: Response<MarketModel>?) {
 
-                if (response != null) {
-                    var responseBody = response.body()
-                    for (coin in responseBody) {
-                        Log.e("alp", "coin: " + coin.name)
-                    }
-                }
-            }
-            override fun onFailure(call: Call<MarketModel>?, t: Throwable?) {
 
-                Log.e("alppppp", "Failed::" + (t))
-            }
-        })
     }
 
     private fun setUpTabs() {
