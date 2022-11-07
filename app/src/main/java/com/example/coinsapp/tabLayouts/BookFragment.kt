@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.coinsapp.R
 import com.example.coinsapp.recyclerView.CoinList
@@ -26,9 +28,13 @@ class BookFragment : Fragment() {
     private lateinit var mContext: Context
     private lateinit var coinList: ArrayList<CoinList>
     private lateinit var coinListAdapter: CoinListAdapter
+    private lateinit var coinRv: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val coinSearch = searchView
+
 
 
     }

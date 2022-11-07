@@ -6,30 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<com.google.android.material.appbar.AppBarLayout
-    android:id="@+id/appBarLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true">
 
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabBackground="@color/white"
+        android:layout_alignParentBottom="true">
 
-        app:tabGravity="fill"
-        app:tabInlineLabel="true"
-        app:tabMode="fixed"/>
 
-</com.google.android.material.appbar.AppBarLayout>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabBackground="@color/white"
+
+            app:tabGravity="fill"
+            app:tabInlineLabel="true"
+            app:tabMode="fixed"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/viewPager"
         />
+
 
 
 </RelativeLayout>
