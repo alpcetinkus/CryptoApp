@@ -6,10 +6,12 @@
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/drawable-v24/cardview_shape.xml" value="0.2285" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/drawable/filter_shape.xml" value="0.4435" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/drawable/ic_account.xml" value="0.3655" />
+        <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.2465" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/drawable/ic_book.xml" value="0.3655" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/drawable/ic_home.xml" value="0.3655" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/drawable/ic_statistic.xml" value="0.3655" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/drawable/search_shape.xml" value="0.3365" />
+        <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/activity_detail.xml" value="0.33" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/activity_main.xml" value="0.3546875" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/card_view_2.xml" value="0.48055555555555557" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/coin_list_card.xml" value="0.5" />
@@ -19,8 +21,10 @@
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_account.xml" value="0.3546875" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_account2.xml" value="0.3546875" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_book.xml" value="0.3641025641025641" />
+        <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_deatail.xml" value="0.44487179487179485" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_home.xml" value="0.3556962025316456" />
         <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/layout/fragment_statistic.xml" value="0.3546875" />
+        <entry key="..\:/Users/ALP/Desktop/Kotlin/CryptoApp/app/src/main/res/menu/bottom_bar_menu.xml" value="0.37777777777777777" />
       </map>
     </option>
   </component>

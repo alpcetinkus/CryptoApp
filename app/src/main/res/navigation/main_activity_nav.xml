@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_nav"
+
+    app:startDestination="@id/HomeFragment">
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.coinsapp.tabLayouts.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home"/>
+    <fragment
+        android:id="@+id/StatisticFragment"
+        android:name="com.example.coinsapp.tabLayouts.StatisticFragment"
+        android:label="StatisticFragment"
+        tools:layout="@layout/fragment_statistic">
+        <action
+            android:id="@+id/action_StatisticFragment_to_deatailFragment"
+            app:destination="@id/deatailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/BookFragment"
+        android:name="com.example.coinsapp.tabLayouts.BookFragment"
+        android:label="BookFragment"
+        tools:layout="@layout/fragment_book"/>
+    <fragment
+        android:id="@+id/deatailFragment"
+        android:name="com.example.coinsapp.tabLayouts.DeatailFragment"
+        android:label="DeatailFragment"
+        tools:layout="@layout/fragment_deatail"/>
+
+</navigation>
+
