@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -22,6 +23,7 @@ import com.example.coinsapp.retrofit.RetrofitClient
 import com.example.coinsapp.retrofit.models.MarketModel
 import kotlinx.android.synthetic.main.coin_list_card.*
 import kotlinx.android.synthetic.main.coin_list_card.view.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_statistic.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,9 +40,14 @@ class StatisticFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
 
-
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val design = inflater.inflate(R.layout.fragment_statistic, container, false)
+        return design
     }
 
     override fun onAttach(context: Context) {
@@ -51,8 +58,6 @@ class StatisticFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         rv_list.setHasFixedSize(true)
         rv_list.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         coinList = ArrayList()
@@ -60,12 +65,12 @@ class StatisticFragment : Fragment() {
         rv_list.adapter = coinListAdapter
 
         Log.e("alp","sorgu atiyorum")
+
         coinrv = rv_list
         coinrv.layoutManager = LinearLayoutManager(coinrv.context)
         coinrv.setHasFixedSize(true)
         val decorator = DividerItemDecoration(mContext, LinearLayoutManager.VERTICAL)
         coinrv.addItemDecoration(decorator)
-
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -76,33 +81,11 @@ class StatisticFragment : Fragment() {
                 coinListAdapter.filter.filter(newText)
                 return false
             }
-
         })
-
-        rv_list.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_StatisticFragment_to_deatailFragment)
-        }
 
         fetchMarketList()
 
     }
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        val design = inflater.inflate(R.layout.fragment_statistic, container, false)
-
-
-
-        return design
-
-
-    }
-
-
 
     fun fetchMarketList() {
         RetrofitClient.getApiImplementation().getCoinListMarket().enqueue(object : Callback<MarketModel> {
@@ -115,6 +98,7 @@ class StatisticFragment : Fragment() {
                     }
                 }
                 coinListAdapter.notifyDataSetChanged()
+                stopProgressBar2()
 
             }
             override fun onFailure(call: Call<MarketModel>?, t: Throwable?) {
@@ -122,10 +106,11 @@ class StatisticFragment : Fragment() {
                 Log.e("alppppp", "Failed::" + (t))
             }
         })
+
     }
 
-
-
-
+    fun stopProgressBar2() {
+        progressBar2.visibility = ProgressBar.GONE
+    }
 
 }
