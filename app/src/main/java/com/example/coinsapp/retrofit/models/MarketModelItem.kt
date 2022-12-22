@@ -7,7 +7,7 @@ data class MarketModelItem(
     @SerializedName("ath")
     val ath: Double,
     @SerializedName("ath_change_percentage")
-    val athChangePercentage: Double,
+    val athChangePercentage: String,
     @SerializedName("ath_date")
     val athDate: String,
     @SerializedName("atl")

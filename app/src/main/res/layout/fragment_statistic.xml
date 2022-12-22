@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tabLayouts.HomeFragment">
+    tools:context=".tabLayouts.HomeFragment"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="15dp"
-
             android:background="@drawable/search_shape"
             android:iconifiedByDefault="false"
             android:queryBackground="@android:color/transparent"
@@ -32,71 +32,60 @@
             android:layout_marginTop="80dp"
             >
 
-            <ImageButton
-                android:id="@+id/btn1"
-                android:layout_width="30dp"
-                android:layout_height="22dp"
-                android:background="@drawable/ic_frame_10__1_"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <Button
-                android:id="@+id/btn2"
-                android:layout_width="79dp"
+                android:id="@+id/turnAllCoins"
+                android:layout_width="80dp"
                 android:layout_height="32dp"
-                android:text="Lastest"
                 android:backgroundTint="@color/white"
+                android:text="All"
                 android:textColor="@color/black"
                 android:textSize="8sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btn1"
+                app:layout_constraintEnd_toStartOf="@+id/positiveBtn"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText" />
 
             <Button
-                android:id="@+id/btn3"
-                android:layout_width="62dp"
+                android:id="@+id/positiveBtn"
+                android:layout_width="80dp"
                 android:layout_height="32dp"
-                android:text="Defi"
                 android:backgroundTint="@color/white"
+                android:text="Pos"
                 android:textColor="@color/black"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn4"
+                app:layout_constraintEnd_toStartOf="@+id/negativeBtn"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btn2"
+                app:layout_constraintStart_toEndOf="@+id/turnAllCoins"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btn4"
-                android:layout_width="61dp"
+                android:id="@+id/negativeBtn"
+                android:layout_width="80dp"
                 android:layout_height="32dp"
-                android:text="DEX"
                 android:backgroundTint="@color/white"
+                android:text="Neg"
                 android:textColor="@color/black"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn5"
+                app:layout_constraintEnd_toStartOf="@+id/toSort"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btn3"
+                app:layout_constraintStart_toEndOf="@+id/positiveBtn"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btn5"
-                android:layout_width="115dp"
+                android:id="@+id/toSort"
+                android:layout_width="80dp"
                 android:layout_height="32dp"
-                android:text="Stablecoin"
+                android:text="HIGH"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btn4"
+                app:layout_constraintStart_toEndOf="@+id/negativeBtn"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -109,7 +98,16 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="130dp">
 
+
         </androidx.recyclerview.widget.RecyclerView>
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="410dp" />
 
 
     </RelativeLayout>

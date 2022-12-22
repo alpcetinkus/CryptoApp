@@ -20,7 +20,7 @@
             android:id="@+id/CoinChange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="120dp"
             android:layout_marginBottom="12dp"
             android:text="TextView"
             android:textColor="@color/black"
@@ -34,13 +34,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="120dp"
             android:text="TextView"
             android:textColor="@color/black"
             android:textSize="12dp"
             app:layout_constraintBottom_toTopOf="@+id/CoinChange"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <ToggleButton
+            android:id="@+id/favBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+           app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/toggle_img"
+            android:clickable="true"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
 
         <TextView
             android:id="@+id/CoinSymbol"
@@ -53,7 +66,7 @@
             android:textSize="9sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/CoinLogo"
-            app:layout_constraintTop_toBottomOf="@+id/CoinNamee" />
+            app:layout_constraintTop_toBottomOf="@+id/CoinNameStatistic" />
 
         <ImageView
             android:id="@+id/CoinLogo"
@@ -66,7 +79,7 @@
             app:srcCompat="@drawable/ic_launcher_background" />
 
         <TextView
-            android:id="@+id/CoinNamee"
+            android:id="@+id/CoinNameStatistic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

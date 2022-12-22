@@ -1,49 +1,34 @@
 package com.example.coinsapp.recyclerView
 
+import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.cardview.widget.CardView
+import android.widget.Filter
+import android.widget.Filterable
+import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coinsapp.R
+import kotlinx.android.synthetic.main.coin_list_card.view.*
+import kotlinx.android.synthetic.main.fav_card.view.*
+import kotlinx.android.synthetic.main.fragment_statistic.view.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
+interface DetailClickInterface {
+    fun onDetailClick(id: String)
+}
 
-class CoinListAdapter (private var mContext: Context, private val coinlist: ArrayList<CoinList>, )
+class CoinListAdapter (private var mContext: Context, private var coinlist: ArrayList<CoinList>, val clickListener: DetailClickInterface  )
     : RecyclerView.Adapter<CoinListAdapter.CardCoinListDesign>(), Filterable {
-
-    var coinFilterList = ArrayList<CoinList>()
-
+     val data = coinlist
 
 
-    inner class CardCoinListDesign(view: View) : RecyclerView.ViewHolder(view) {
-
-        var coinListCardView: CardView
-        var coinSymbol: TextView
-        var coinName: TextView
-        var coinPrice: TextView
-        var coinChange: TextView
-        var coinLogo: ImageView
-
-        init {
-
-            coinFilterList = coinlist
-            coinListCardView = view.findViewById(R.id.alp)
-            coinSymbol = view.findViewById(R.id.CoinSymbol)
-            coinName = view.findViewById(R.id.CoinNamee)
-            coinPrice = view.findViewById(R.id.CoinPrice)
-            coinChange = view.findViewById(R.id.CoinChange)
-            coinLogo = view.findViewById(R.id.CoinLogo)
-
-        }
-
+    class CardCoinListDesign(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardCoinListDesign {
@@ -53,47 +38,95 @@ class CoinListAdapter (private var mContext: Context, private val coinlist: Arra
 
     override fun onBindViewHolder(holder: CardCoinListDesign, position: Int) {
         val coin = coinlist[position]
-        Glide.with(mContext).load(coin.CoinImg).into(holder.coinLogo)
-        holder.coinName.text = coin.CoinName
-        holder.coinSymbol.text = coin.CoinSymbol
-        holder.coinPrice.text = coin.CoinPrice
-        holder.coinChange.text = coin.CoinChange
-        holder.coinListCardView.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_StatisticFragment_to_deatailFragment)
+        Glide.with(mContext).load(coin.image).into(holder.itemView.CoinLogo)
+        holder.itemView.CoinNameStatistic.text = coin.name
+        holder.itemView.CoinSymbol.text = coin.symbol
+        holder.itemView.CoinPrice.text = "%.3f".format(coin.currentPrice)
+        holder.itemView.CoinChange.text = "%.3f".format(coin.priceChange24h)
+        holder.itemView.favBtn.isChecked = didItemInFavoriteList(coin.name)
+
+        holder.itemView.favBtn.setOnClickListener {
+            addToMyFavoriteList("${holder.itemView.CoinNameStatistic.text}")
+            removeToFavoriteList("${holder.itemView.CoinNameStatistic.text}")
+        }
+
+        holder.itemView.setOnClickListener {
+            val bundle = bundleOf("coinIdKey" to coin.id)
+            Navigation.findNavController(it).navigate(R.id.action_StatisticFragment_to_deatailFragment, bundle)
         }
     }
 
     override fun getItemCount(): Int {
-      return coinlist.size
+        return coinlist.size
     }
 
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(p0: CharSequence?): FilterResults {
-                val charSearch = p0.toString()
-                if (charSearch.isEmpty()) {
-                    coinFilterList = coinlist
-                } else {
-                    val resultList = ArrayList<CoinList>()
-                    for (row in coinlist) {
-                        if (row.CoinName.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))) {
-                            resultList.add(row)
-                        }
+    companion object {
+        const val spKey = "fav_list"
+    }
+
+    fun persistFavoriteList(favNames: MutableSet<String>?) {
+        val sp = mContext?.getSharedPreferences(Companion.spKey, Context.MODE_PRIVATE)
+        val editor = sp?.edit()
+        editor?.putStringSet("CoinFavName", favNames)
+        editor?.apply()
+    }
+
+    fun addToMyFavoriteList(coinName: String) {
+        val list = retrieveFavoriteList()
+        if (list?.contains(coinName) == false) {
+            list.add(coinName)
+        }
+        persistFavoriteList(list)
+    }
+
+    fun didItemInFavoriteList(coinName: String): Boolean {
+        val list = retrieveFavoriteList()
+        val contains = list?.contains(coinName)
+        return contains == true
+
+    }
+
+    fun removeToFavoriteList(coinName: String) {
+        val list = retrieveFavoriteList()
+        if (list?.contains(coinName) == true) {
+            list.remove(coinName)
+        }
+        persistFavoriteList(list)
+
+    }
+
+    fun retrieveFavoriteList(): MutableSet<String>? {
+        val sp = mContext?.getSharedPreferences(Companion.spKey, Context.MODE_PRIVATE)
+        val list = sp?.getStringSet("CoinFavName", HashSet<String>())
+        return list
+    }
+
+override fun getFilter(): Filter {
+    return object : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val filteredList = ArrayList<CoinList>()
+            if (constraint.isNullOrEmpty()) {
+                filteredList.addAll(data)
+            } else {
+                val filterPattern = constraint.toString().lowercase(Locale.ROOT).trim()
+                for (item in data) {
+                    if (item.name.lowercase(Locale.ROOT).contains(filterPattern)) {
+                        filteredList.add(item)
                     }
-                    coinFilterList = resultList
-
                 }
-                val filterResult = FilterResults()
-                filterResult.values = coinFilterList
-                return filterResult
             }
+            val results = FilterResults()
+            results.values = filteredList
+            return results
+        }
 
-            @Suppress("UNCHECKED_CAST")
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                coinFilterList = results?.values as ArrayList<CoinList>
-                notifyDataSetChanged()
-
-            }
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            coinlist.clear()
+            coinlist.addAll(results?.values as ArrayList<CoinList>)
+            notifyDataSetChanged()
         }
     }
 }
+}
+
+

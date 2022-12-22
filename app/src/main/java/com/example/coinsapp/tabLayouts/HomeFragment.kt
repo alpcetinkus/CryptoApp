@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.core.view.isGone
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -58,22 +60,21 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun stopProgressBar() {
-        progressBar.visibility = ProgressBar.GONE
-    }
-
     fun fetchMarketList() {
+
+       progressBar.visibility = View.VISIBLE
         RetrofitClient.getApiImplementation().getCoinListMarket().enqueue(object : Callback<MarketModel> {
             override fun onResponse(call: Call<MarketModel>?, response: Response<MarketModel>?) {
 
                 if (response != null) {
                     var responseBody = response.body()
                     for (coin in responseBody) {
-                        coinHomeList.add(CoinHomeList(coin.image,coin.name,coin.currentPrice,coin.symbol,coin.atl.toString(),coin.priceChange24h))
+                        coinHomeList.add(CoinHomeList(coin.image,coin.name,coin.symbol,coin.id,coin.priceChange24h))
                     }
                 }
                 homeAdapter.notifyDataSetChanged()
-                stopProgressBar()
+                progressBar.visibility = View.GONE
+
             }
             override fun onFailure(call: Call<MarketModel>?, t: Throwable?) {
 
@@ -90,6 +91,8 @@ class HomeFragment : Fragment() {
 
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
+
+
 
 
 }

@@ -1,42 +1,20 @@
 package com.example.coinsapp.recyclerView
 
 import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coinsapp.R
+import kotlinx.android.synthetic.main.home_list_card.view.*
 
 class HomeAdapter(private var mContext: Context, private val coinhomelist: ArrayList<CoinHomeList>)
     : RecyclerView.Adapter<HomeAdapter.homeListDesign>()  {
 
    inner class homeListDesign(view: View) : RecyclerView.ViewHolder(view) {
 
-       var homeListCard: CardView
-       var coinImg: ImageView
-       var coinSymbol: TextView
-       var coinName: TextView
-       var indicator1: ImageView
 
-
-
-
-       init {
-           homeListCard = view.findViewById(R.id.homeCardView)
-           coinSymbol = view.findViewById(R.id.CoinSymbol)
-           coinName = view.findViewById(R.id.CoinNamee)
-           coinImg = view.findViewById(R.id.CoinLogo)
-           indicator1 = view.findViewById(R.id.indicator_up)
-
-
-
-       }
 
     }
 
@@ -47,23 +25,23 @@ class HomeAdapter(private var mContext: Context, private val coinhomelist: Array
 
     override fun onBindViewHolder(holder: homeListDesign, position: Int) {
         val coin = coinhomelist[position]
-        Glide.with(mContext).load(coin.image).into(holder.coinImg)
+        Glide.with(mContext).load(coin.image).into(holder.itemView.CoinLogo)
         val neg = 0
-        if (coin.priceChange >= neg) {
-            Glide.with(mContext).load(R.drawable.ic_baseline_trending_up).into(holder.indicator1)
+        if (coin.priceChange24h >= neg) {
+            Glide.with(mContext).load(R.drawable.ic_baseline_trending_up).into(holder.itemView.indicator_up)
         } else {
-            Glide.with(mContext).load(R.drawable.ic_baseline_trending_down_24).into(holder.indicator1)
+            Glide.with(mContext).load(R.drawable.ic_baseline_trending_down_24).into(holder.itemView.indicator_up)
         }
 
 
-        holder.coinName.text = coin.name
-        holder.coinSymbol.text = coin.coinSymbol
-
+        holder.itemView.CoinNamee.text = coin.name
+        holder.itemView.CoinSymbol.text = coin.symbol
     }
 
     override fun getItemCount(): Int {
-        return coinhomelist.size
+        return coinhomelist.take(8).size
     }
+
 
 
 }

@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_StatisticFragment_to_deatailFragment"
             app:destination="@id/deatailFragment" />
+        <action
+            android:id="@+id/action_StatisticFragment_to_BookFragment"
+            app:destination="@id/BookFragment" />
     </fragment>
     <fragment
         android:id="@+id/BookFragment"
@@ -26,9 +29,9 @@
         tools:layout="@layout/fragment_book"/>
     <fragment
         android:id="@+id/deatailFragment"
-        android:name="com.example.coinsapp.tabLayouts.DeatailFragment"
+        android:name="com.example.coinsapp.tabLayouts.DetailFragment"
         android:label="DeatailFragment"
-        tools:layout="@layout/fragment_deatail"/>
+        tools:layout="@layout/fragment_detail"/>
 
 </navigation>
 

@@ -1,5 +1,6 @@
 package com.example.coinsapp
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
@@ -25,7 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_fragment) as NavHostFragment
         NavigationUI.setupWithNavController(bottomNav,navHostFragment.navController)
-
 
 
     }

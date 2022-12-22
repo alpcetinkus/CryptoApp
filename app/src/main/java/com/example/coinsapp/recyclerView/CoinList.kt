@@ -1,4 +1,20 @@
 package com.example.coinsapp.recyclerView
 
-data class CoinList( var CoinImg: String, var CoinName: String, var CoinSymbol: String, var CoinPrice: String, var CoinChange: String) {
+import com.google.gson.annotations.SerializedName
+
+data class CoinList(
+    @SerializedName("image")
+    val image: String,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("symbol")
+    val symbol: String,
+    @SerializedName("current_price")
+    val currentPrice: Double,
+    @SerializedName("price_change_24h")
+    val priceChange24h: Double,
+    @SerializedName("id")
+    val id: String,
+    )
+{
 }

@@ -9,13 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fav"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:layout_centerInParent="true"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fav_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
