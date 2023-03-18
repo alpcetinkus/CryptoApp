@@ -1,6 +1,6 @@
-package com.example.coinsapp.tabLayouts
+package com.example.coinsapp.fragment
 
-import android.annotation.SuppressLint
+
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,14 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
 import com.example.coinsapp.R
-import com.example.coinsapp.recyclerView.*
-import com.example.coinsapp.retrofit.RetrofitClient
-import com.example.coinsapp.retrofit.models2.CoinDetail
+import com.example.coinsapp.adapter.*
+import com.example.coinsapp.model.RetrofitClient
+import com.example.coinsapp.model.models.MarketModel
+import com.example.coinsapp.model.models.MarketModelItem
 
 import kotlinx.android.synthetic.main.fragment_detail.*
-import kotlinx.android.synthetic.main.fragment_detail.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +23,7 @@ import retrofit2.Response
 class DetailFragment : Fragment() {
 
     private lateinit var mContext: Context
-
+private lateinit var detailList: ArrayList<MarketModelItem>
     private lateinit var detailAdapter: DetailAdapter
 
 
@@ -48,7 +47,6 @@ class DetailFragment : Fragment() {
 
         val coinId = arguments?.getString("coinIdKey")
 
-
         fetchDetail(coinId)
 
     }
@@ -56,40 +54,28 @@ class DetailFragment : Fragment() {
     fun fetchDetail(id: String?) {
 
         id?.let {
-            RetrofitClient.getApiImplementation().getDetails(it).enqueue(object : Callback<CoinDetail> {
-                @SuppressLint("SetTextI18n")
-                override fun onResponse(call: Call<CoinDetail>?, response: Response<CoinDetail>?) {
+            RetrofitClient.getApiImplementation().getDetails(it).enqueue(object : Callback<MarketModel> {
+                override fun onResponse(call: Call<MarketModel>?, response: Response<MarketModel>?) {
 
                     Log.e("alppppppppp", "$id secildi")
-
                     if (response != null) {
                         var resBody = response.body()
-                        detailName.text = resBody.name
-                        Glide.with(mContext).load(resBody.image.small).into(CoinLogo)
-                        detailPrice.text = "Current Price: $ ${resBody.marketData.currentPrice.usd}"
-                        market_cap_tv.text = "Market Cap: ${resBody.marketData.marketCap.usd}"
-                        high24_tv.text = "High 24: ${resBody.marketData.high24h.usd}"
-                        low24_tv.text = "Low 24: ${resBody.marketData.low24h.usd}"
-                        price_change_24h_tv.text = "Price Change 24: ${resBody.marketData.priceChange24h}"
-                        val neg = 0
-                        if (resBody.marketData.priceChange24h >= neg) {
-                            Glide.with(mContext).load(R.drawable.ic_baseline_trending_up).into(indicator)
-                        } else {
-                            Glide.with(mContext).load(R.drawable.ic_baseline_trending_down_24).into(indicator)
+                        for (coin in resBody) {
+                            detailList.add(coin)
                         }
+                        detailAdapter.notifyDataSetChanged()
+
                     }
                 }
 
-                override fun onFailure(call: Call<CoinDetail>?, t: Throwable?) {
+                override fun onFailure(call: Call<MarketModel>?, t: Throwable?) {
 
                     Log.e("alppppp", "Failed::" + (t))
                 }
             })
         }
 
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,6 +84,4 @@ class DetailFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
-
-
 }

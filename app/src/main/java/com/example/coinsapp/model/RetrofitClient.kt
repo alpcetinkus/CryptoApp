@@ -1,4 +1,4 @@
-package com.example.coinsapp.retrofit
+package com.example.coinsapp.model
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,7 +11,6 @@ class RetrofitClient {
         fun getApiImplementation(): CryptoApi {
             return getClient(BASE_URL).create(CryptoApi::class.java)
         }
-
         fun getClient(baseUrl: String): Retrofit {
             return Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -19,7 +18,6 @@ class RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-
         fun getOkHttpClient(): OkHttpClient {
             return OkHttpClient.Builder()
                 .addInterceptor(

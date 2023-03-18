@@ -1,6 +1,5 @@
-package com.example.coinsapp.recyclerView
+package com.example.coinsapp.adapter
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +11,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coinsapp.R
+import com.example.coinsapp.model.models.MarketModelItem
 import kotlinx.android.synthetic.main.coin_list_card.view.*
-import kotlinx.android.synthetic.main.fav_card.view.*
-import kotlinx.android.synthetic.main.fragment_statistic.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
@@ -23,7 +21,7 @@ interface DetailClickInterface {
     fun onDetailClick(id: String)
 }
 
-class CoinListAdapter (private var mContext: Context, private var coinlist: ArrayList<CoinList>, val clickListener: DetailClickInterface  )
+class CoinListAdapter (private var mContext: Context, private var coinlist: ArrayList<MarketModelItem>, val clickListener: DetailClickInterface  )
     : RecyclerView.Adapter<CoinListAdapter.CardCoinListDesign>(), Filterable {
      val data = coinlist
 
@@ -41,8 +39,8 @@ class CoinListAdapter (private var mContext: Context, private var coinlist: Arra
         Glide.with(mContext).load(coin.image).into(holder.itemView.CoinLogo)
         holder.itemView.CoinNameStatistic.text = coin.name
         holder.itemView.CoinSymbol.text = coin.symbol
-        holder.itemView.CoinPrice.text = "%.3f".format(coin.currentPrice)
-        holder.itemView.CoinChange.text = "%.3f".format(coin.priceChange24h)
+        holder.itemView.CoinPrice.text = "%.3f".format(coin.current_price)
+        holder.itemView.CoinChange.text = "%.3f".format(coin.price_change_24h)
         holder.itemView.favBtn.isChecked = didItemInFavoriteList(coin.name)
 
         holder.itemView.favBtn.setOnClickListener {
@@ -104,7 +102,7 @@ class CoinListAdapter (private var mContext: Context, private var coinlist: Arra
 override fun getFilter(): Filter {
     return object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val filteredList = ArrayList<CoinList>()
+            val filteredList = ArrayList<MarketModelItem>()
             if (constraint.isNullOrEmpty()) {
                 filteredList.addAll(data)
             } else {
@@ -122,7 +120,7 @@ override fun getFilter(): Filter {
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             coinlist.clear()
-            coinlist.addAll(results?.values as ArrayList<CoinList>)
+            coinlist.addAll(results?.values as ArrayList<MarketModelItem>)
             notifyDataSetChanged()
         }
     }

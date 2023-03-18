@@ -1,4 +1,4 @@
-package com.example.coinsapp.tabLayouts
+package com.example.coinsapp.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -13,15 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.coinsapp.R
-import com.example.coinsapp.recyclerView.*
-import com.example.coinsapp.retrofit.RetrofitClient
-import com.example.coinsapp.retrofit.models.MarketModel
-import com.example.coinsapp.retrofit.models2.CoinDetail
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.coin_list_card.*
-import kotlinx.android.synthetic.main.coin_list_card.view.*
+import com.example.coinsapp.adapter.*
+import com.example.coinsapp.model.RetrofitClient
+import com.example.coinsapp.model.models.MarketModel
+import com.example.coinsapp.model.models.MarketModelItem
 import kotlinx.android.synthetic.main.fragment_statistic.*
-import kotlinx.android.synthetic.main.fragment_statistic.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,7 +27,7 @@ import kotlin.collections.ArrayList
 class StatisticFragment : Fragment(), DetailClickInterface {
 
     private lateinit var mContext: Context
-    private lateinit var coinList: ArrayList<CoinList>
+    private lateinit var coinList: ArrayList<MarketModelItem>
     private lateinit var coinListAdapter: CoinListAdapter
     private lateinit var coinrv: RecyclerView
 
@@ -70,7 +66,7 @@ class StatisticFragment : Fragment(), DetailClickInterface {
        positiveBtn.setOnClickListener {
            fetchMarketList()
             val positiveCoins = coinList.filter {
-                it.priceChange24h >= 0
+                it.price_change_24h >= 0
             }
            updateData(positiveCoins)
 
@@ -79,7 +75,7 @@ class StatisticFragment : Fragment(), DetailClickInterface {
         negativeBtn.setOnClickListener {
             fetchMarketList()
             val negativeCoins = coinList.filter {
-                it.priceChange24h < 0
+                it.price_change_24h < 0
             }
             updateData(negativeCoins)
         }
@@ -93,7 +89,7 @@ class StatisticFragment : Fragment(), DetailClickInterface {
         toSort.setOnClickListener {
             fetchMarketList()
             val lowTo = coinList.sortedBy {
-                it.priceChange24h
+                it.price_change_24h
             }
             updateData(lowTo)
         }
@@ -114,7 +110,7 @@ class StatisticFragment : Fragment(), DetailClickInterface {
         })
     }
 
-    fun updateData(newData: List<CoinList>) {
+    fun updateData(newData: List<MarketModelItem>) {
         coinList.clear()
         coinList.addAll(newData)
         coinListAdapter.notifyDataSetChanged()
@@ -125,10 +121,9 @@ class StatisticFragment : Fragment(), DetailClickInterface {
         RetrofitClient.getApiImplementation().getCoinListMarket().enqueue(object : Callback<MarketModel> {
             override fun onResponse(call: Call<MarketModel>?, response: Response<MarketModel>?) {
                 if (response != null) {
-                    var responseBody = response.body()
+                    val responseBody = response.body()
                     for (coin in responseBody) {
-                        coinList.add(CoinList(coin.image, coin.name, coin.symbol, coin.currentPrice, coin.priceChange24h, coin.id))
-                    }
+                        coinList.add(coin)  }
                 }
                 coinListAdapter.notifyDataSetChanged()
                 progressBar2.visibility = View.GONE
@@ -141,8 +136,8 @@ class StatisticFragment : Fragment(), DetailClickInterface {
     }
 
     override fun onDetailClick(id: String) {
-        RetrofitClient.getApiImplementation().getDetails(id).enqueue(object : Callback<CoinDetail> {
-            override fun onResponse(call: Call<CoinDetail>?, response: Response<CoinDetail>?) {
+        RetrofitClient.getApiImplementation().getDetails(id).enqueue(object : Callback<MarketModel> {
+            override fun onResponse(call: Call<MarketModel>?, response: Response<MarketModel>?) {
                 Log.e("alppppppppp", "$id secildi")
 
                 if (response != null) {
@@ -150,7 +145,7 @@ class StatisticFragment : Fragment(), DetailClickInterface {
                 }
             }
 
-            override fun onFailure(call: Call<CoinDetail>?, t: Throwable?) {
+            override fun onFailure(call: Call<MarketModel>?, t: Throwable?) {
                 Log.e("alppppp", "Failed::" + (t))
             }
         })

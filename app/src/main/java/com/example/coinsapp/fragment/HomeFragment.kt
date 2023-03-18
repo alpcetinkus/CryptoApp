@@ -1,4 +1,4 @@
-package com.example.coinsapp.tabLayouts
+package com.example.coinsapp.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -7,21 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.Toast
-import android.widget.ToggleButton
-import androidx.core.view.isGone
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.coinsapp.R
-import com.example.coinsapp.recyclerView.CoinHomeList
-import com.example.coinsapp.recyclerView.CoinList
-import com.example.coinsapp.recyclerView.CoinListAdapter
-import com.example.coinsapp.recyclerView.HomeAdapter
-import com.example.coinsapp.retrofit.RetrofitClient
-import com.example.coinsapp.retrofit.models.MarketModel
+import com.example.coinsapp.adapter.HomeAdapter
+import com.example.coinsapp.model.RetrofitClient
+import com.example.coinsapp.model.models.MarketModel
+import com.example.coinsapp.model.models.MarketModelItem
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_statistic.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,7 +22,7 @@ import retrofit2.Response
 
 class HomeFragment : Fragment() {
     private lateinit var mContext: Context
-    private lateinit var coinHomeList: ArrayList<CoinHomeList>
+    private lateinit var coinHomeList: ArrayList<MarketModelItem>
     private lateinit var homeAdapter: HomeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +33,6 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
         mContext = context
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,7 +60,7 @@ class HomeFragment : Fragment() {
                 if (response != null) {
                     var responseBody = response.body()
                     for (coin in responseBody) {
-                        coinHomeList.add(CoinHomeList(coin.image,coin.name,coin.symbol,coin.id,coin.priceChange24h))
+                        coinHomeList.add(coin)
                     }
                 }
                 homeAdapter.notifyDataSetChanged()

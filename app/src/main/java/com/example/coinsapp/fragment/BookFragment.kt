@@ -1,17 +1,14 @@
-package com.example.coinsapp.tabLayouts
+package com.example.coinsapp.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.coinsapp.R
-import com.example.coinsapp.recyclerView.CoinList
-import com.example.coinsapp.recyclerView.CoinListAdapter
-import com.example.coinsapp.recyclerView.FavoriteListAdapter
+import com.example.coinsapp.adapter.FavoriteListAdapter
 import kotlinx.android.synthetic.main.fragment_book.*
 
 
@@ -26,16 +23,7 @@ class BookFragment : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
 
-        val list = retrieveFavoriteList()
-        if (list != null) {
-            myFavoriteList.clear()
-            myFavoriteList.addAll(list)
-        }
-       favAdapter.notifyDataSetChanged()
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -60,16 +48,4 @@ class BookFragment : Fragment() {
 
 
     }
-
-
-
-    fun retrieveFavoriteList() : MutableSet<String>? {
-        val sp = activity?.getSharedPreferences(CoinListAdapter.spKey,Context.MODE_PRIVATE)
-        val list = sp?.getStringSet("CoinFavName",null)
-
-        return list
-    }
-
-
-
 }

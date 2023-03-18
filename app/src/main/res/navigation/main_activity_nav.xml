@@ -7,12 +7,12 @@
     app:startDestination="@id/HomeFragment">
     <fragment
         android:id="@+id/HomeFragment"
-        android:name="com.example.coinsapp.tabLayouts.HomeFragment"
+        android:name="com.example.coinsapp.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/StatisticFragment"
-        android:name="com.example.coinsapp.tabLayouts.StatisticFragment"
+        android:name="com.example.coinsapp.fragment.StatisticFragment"
         android:label="StatisticFragment"
         tools:layout="@layout/fragment_statistic">
         <action
@@ -24,12 +24,12 @@
     </fragment>
     <fragment
         android:id="@+id/BookFragment"
-        android:name="com.example.coinsapp.tabLayouts.BookFragment"
+        android:name="com.example.coinsapp.fragment.BookFragment"
         android:label="BookFragment"
         tools:layout="@layout/fragment_book"/>
     <fragment
         android:id="@+id/deatailFragment"
-        android:name="com.example.coinsapp.tabLayouts.DetailFragment"
+        android:name="com.example.coinsapp.fragment.DetailFragment"
         android:label="DeatailFragment"
         tools:layout="@layout/fragment_detail"/>
 

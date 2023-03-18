@@ -1,4 +1,4 @@
-package com.example.coinsapp.tabLayouts
+package com.example.coinsapp.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
