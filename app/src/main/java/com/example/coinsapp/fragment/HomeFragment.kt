@@ -7,13 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.coinsapp.R
 import com.example.coinsapp.adapter.HomeAdapter
-import com.example.coinsapp.model.RetrofitClient
-import com.example.coinsapp.model.models.MarketModel
-import com.example.coinsapp.model.models.MarketModelItem
+import com.example.coinsapp.adapter.TopLossGainPagerAdapter
+import com.example.coinsapp.model.CryptoCurrency
+import com.example.coinsapp.model.MarketModel
+import com.example.coinsapp.service.RetrofitClient
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,8 +26,9 @@ import retrofit2.Response
 
 class HomeFragment : Fragment() {
     private lateinit var mContext: Context
-    private lateinit var coinHomeList: ArrayList<MarketModelItem>
+    private lateinit var coinHomeList: MutableList<CryptoCurrency>
     private lateinit var homeAdapter: HomeAdapter
+    private lateinit var topCurrencyRecyclerView : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,34 +42,27 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv_home_list.setHasFixedSize(true)
-        rv_home_list.layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
+        topCurrencyRecyclerView = view?.findViewById(R.id.topCurrencyRecyclerView)!!
         coinHomeList = ArrayList()
         homeAdapter = HomeAdapter(mContext,coinHomeList)
-        rv_home_list.adapter = homeAdapter
-
-        homelist_seeAll_TextView.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.StatisticFragment)
-        }
-
+        topCurrencyRecyclerView.adapter = homeAdapter
         fetchMarketList()
+        setTabLayout()
 
     }
 
     fun fetchMarketList() {
 
-       progressBar.visibility = View.VISIBLE
-        RetrofitClient.getApiImplementation().getCoinListMarket().enqueue(object : Callback<MarketModel> {
+        RetrofitClient.getApiImplementation().getMarketData().enqueue(object : Callback<MarketModel> {
             override fun onResponse(call: Call<MarketModel>?, response: Response<MarketModel>?) {
 
                 if (response != null) {
-                    var responseBody = response.body()
-                    for (coin in responseBody) {
+                    var responseBody = response.body()?.data?.cryptoCurrencyList
+                    for (coin in responseBody!!) {
                         coinHomeList.add(coin)
                     }
                 }
                 homeAdapter.notifyDataSetChanged()
-                progressBar.visibility = View.GONE
 
             }
             override fun onFailure(call: Call<MarketModel>?, t: Throwable?) {
@@ -72,18 +70,40 @@ class HomeFragment : Fragment() {
                 Log.e("alppppp", "Failed::" + (t))
             }
         })
-
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
 
+    fun setTabLayout() {
+        val adapter = TopLossGainPagerAdapter(this)
+        contentViewPager.adapter = adapter
+        contentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
 
+                if (position == 0) {
+                    topGainIndicator.visibility = View.VISIBLE
+                    topLoseIndicator.visibility = View.GONE
+                } else {
+                    topGainIndicator.visibility = View.GONE
+                    topLoseIndicator.visibility = View.VISIBLE
+                }
+            }
+        })
+        TabLayoutMediator(tabLayout,contentViewPager) {
+        tab, position ->
+            var title = if(position == 0) {
+                "Top Gains"
+            } else {
+                "Top Losers"
+            }
+            tab.text = title
+        }.attach()
+    }
 }

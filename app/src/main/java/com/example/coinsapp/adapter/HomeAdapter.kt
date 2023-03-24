@@ -7,36 +7,36 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coinsapp.R
-import com.example.coinsapp.model.models.MarketModelItem
-import kotlinx.android.synthetic.main.home_list_card.view.*
+import com.example.coinsapp.model.CryptoCurrency
+import kotlinx.android.synthetic.main.top_currency_layout.view.*
 
-class HomeAdapter(private var mContext: Context, private val coinhomelist: ArrayList<MarketModelItem>)
+
+class HomeAdapter(private var mContext: Context, private val coinhomelist: List<CryptoCurrency>)
     : RecyclerView.Adapter<HomeAdapter.homeListDesign>()  {
 
-   inner class homeListDesign(view: View) : RecyclerView.ViewHolder(view) {
-
-
+   class homeListDesign(view: View) : RecyclerView.ViewHolder(view) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): homeListDesign {
-        val design = LayoutInflater.from(mContext).inflate(R.layout.home_list_card,parent,false)
+        val design = LayoutInflater.from(mContext).inflate(R.layout.top_currency_layout,parent,false)
         return homeListDesign(design)
     }
 
     override fun onBindViewHolder(holder: homeListDesign, position: Int) {
         val coin = coinhomelist[position]
-        Glide.with(mContext).load(coin.image).into(holder.itemView.CoinLogo)
-        val neg = 0
-        if (coin.price_change_24h >= neg) {
-            Glide.with(mContext).load(R.drawable.ic_baseline_trending_up).into(holder.itemView.indicator_up)
+        Glide.with(mContext).load("http://s2.coinmarketcap.com/static/img/coins/64x64/" + coin.id + ".png")
+            .into(holder.itemView.topCurrencyImageView)
+
+        if (coin.quotes!![0].percentChange24h > 0) {
+            holder.itemView.topCurrencyChangeTextView.setTextColor(mContext.resources.getColor(R.color.green))
+            holder.itemView.topCurrencyChangeTextView.text = "+ ${String.format("%.02f", coin.quotes[0].percentChange24h)} %"
         } else {
-            Glide.with(mContext).load(R.drawable.ic_baseline_trending_down_24).into(holder.itemView.indicator_up)
+            holder.itemView.topCurrencyChangeTextView.setTextColor(mContext.resources.getColor(R.color.red))
+            holder.itemView.topCurrencyChangeTextView.text = "${String.format("%.02f" , coin.quotes[0].percentChange24h)} %"
         }
 
-
-        holder.itemView.CoinNamee.text = coin.name
-        holder.itemView.CoinSymbol.text = coin.symbol
+        holder.itemView.topCurrencyNameTextView.text = coin.name
     }
 
     override fun getItemCount(): Int {

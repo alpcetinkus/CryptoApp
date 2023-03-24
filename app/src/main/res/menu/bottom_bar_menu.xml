@@ -4,11 +4,7 @@
 
     <item
         android:id="@+id/HomeFragment"
-        android:icon="@drawable/ic_home" />
-    <item
-        android:id="@+id/StatisticFragment"
-        android:icon="@drawable/ic_statistic" />
-    <item
-        android:id="@+id/BookFragment"
-        android:icon="@drawable/ic_book" />
+
+        android:title="TODO" />
+
 </menu>

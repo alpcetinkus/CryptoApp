@@ -1,4 +1,4 @@
-package com.example.coinsapp.model
+package com.example.coinsapp.service
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
     companion object {
-        val BASE_URL = "https://api.coingecko.com/"
+        val BASE_URL = "https://api.coinmarketcap.com/"
         fun getApiImplementation(): CryptoApi {
             return getClient(BASE_URL).create(CryptoApi::class.java)
         }
