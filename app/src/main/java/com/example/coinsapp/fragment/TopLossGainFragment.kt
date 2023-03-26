@@ -63,7 +63,7 @@ class TopLossGainFragment : Fragment() {
                     for (coin in responseBody!!) {
                         marketList.add(coin)
                     }
-            
+
                 }
                 marketAdapter.notifyDataSetChanged()
             }

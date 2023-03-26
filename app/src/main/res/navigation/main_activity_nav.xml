@@ -9,29 +9,31 @@
         android:id="@+id/HomeFragment"
         android:name="com.example.coinsapp.fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home"/>
-    <fragment
-        android:id="@+id/StatisticFragment"
-        android:name="com.example.coinsapp.fragment.StatisticFragment"
-        android:label="StatisticFragment"
-        tools:layout="@layout/fragment_statistic">
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_StatisticFragment_to_deatailFragment"
-            app:destination="@id/deatailFragment" />
-        <action
-            android:id="@+id/action_StatisticFragment_to_BookFragment"
-            app:destination="@id/BookFragment" />
+            android:id="@+id/action_HomeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/BookFragment"
-        android:name="com.example.coinsapp.fragment.BookFragment"
-        android:label="BookFragment"
-        tools:layout="@layout/fragment_book"/>
+        android:id="@+id/marketFragment"
+        android:name="com.example.coinsapp.fragment.MarketFragment"
+        android:label="StatisticFragment"
+        tools:layout="@layout/fragment_market"/>
     <fragment
-        android:id="@+id/deatailFragment"
-        android:name="com.example.coinsapp.fragment.DetailFragment"
-        android:label="DeatailFragment"
-        tools:layout="@layout/fragment_detail"/>
+        android:id="@+id/watchListFragment"
+        android:name="com.example.coinsapp.fragment.WatchListFragment"
+        android:label="BookFragment"
+        tools:layout="@layout/fragment_watch_list"/>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.coinsapp.fragment.DetailsFragment"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="data"
+            app:argType="com.example.coinsapp.model.CryptoCurrency"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 
 </navigation>
 
