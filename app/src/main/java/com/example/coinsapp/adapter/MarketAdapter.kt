@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coinsapp.R
+import com.example.coinsapp.fragment.HomeFragmentDirections
 import com.example.coinsapp.model.CryptoCurrency
 import kotlinx.android.synthetic.main.currency_item_card.view.*
 import kotlinx.android.synthetic.main.top_currency_layout.view.*
@@ -47,6 +49,12 @@ class MarketAdapter(private var mContext: Context, private val marketlist: List<
         holder.itemView.currencyPriceTextView.text = "${String.format("$%.02f" , coin.quotes[0].price)}"
 
 
+        holder.itemView.setOnClickListener {
+            findNavController(it).navigate(
+                HomeFragmentDirections.actionHomeFragmentToDetailsFragment()
+            )
+
+        }
     }
 
     override fun getItemCount(): Int {
