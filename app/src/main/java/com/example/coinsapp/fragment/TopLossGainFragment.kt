@@ -46,7 +46,7 @@ class TopLossGainFragment : Fragment() {
 
         topLossRecyclerView = view?.findViewById(R.id.topGainLoseRecyclerView)!!
         marketList = ArrayList()
-        marketAdapter = MarketAdapter(mContext,marketList)
+        marketAdapter = MarketAdapter(mContext,"home", marketList)
         topLossRecyclerView.adapter = marketAdapter
 
         fetchMarketData()

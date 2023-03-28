@@ -1,15 +1,19 @@
 package com.example.coinsapp.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.coinsapp.R
 import com.example.coinsapp.model.CryptoCurrency
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.currency_item_card.view.*
 import kotlinx.android.synthetic.main.fragment_details.*
 
@@ -20,22 +24,68 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val data: CryptoCurrency = item.data!!
-        setUpDetails(data)
-        loadChart(data)
-        setButtonOnClick(data)
         return inflater.inflate(R.layout.fragment_details, container, false)
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        backStackButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
+        val data: CryptoCurrency = item.data!!
+        setUpDetails(data)
+        loadChart(data)
+        setButtonOnClick(data)
+        addToWatchList()
 
     }
+    var watchList: ArrayList<String>? = null
+    var watchListChecked = false
+    private fun addToWatchList() {
+        readData()
 
+        watchListChecked = if (watchList!!.contains(item.data!!.symbol)) {
+            addWatchlistButton.setImageResource(R.drawable.ic_star)
+            true
+        } else {
+            addWatchlistButton.setImageResource(R.drawable.ic_star_outline)
+            false
+        }
+
+        addWatchlistButton.setOnClickListener {
+            watchListChecked =
+                if (!watchListChecked) {
+                    if (!watchList!!.contains(item.data!!.symbol)) {
+                        watchList!!.add(item.data!!.symbol)
+                    }
+                        storeData()
+                        addWatchlistButton.setImageResource(R.drawable.ic_star)
+                        true
+                    } else {
+                        addWatchlistButton.setImageResource(R.drawable.ic_star_outline)
+                        watchList!!.remove(item.data!!.symbol)
+                        storeData()
+                        false
+                }
+        }
+    }
+    private fun storeData() {
+        val sharedPreferences = requireActivity().getSharedPreferences("watchlist", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(watchList)
+        editor.putString("watchlist", json)
+        editor.apply()
+    }
+    private fun readData() {
+        val sharedPreferences = requireActivity().getSharedPreferences("watchlist", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("watchlist", ArrayList<String>().toString())
+        val type = object : TypeToken<ArrayList<String>>() {}.type
+        watchList = gson.fromJson(json, type)
+    }
     fun setUpDetails(data: CryptoCurrency) {
         detailSymbolTextView.text = data.symbol
 
@@ -44,7 +94,7 @@ class DetailsFragment : Fragment() {
             .thumbnail(Glide.with(requireContext()).load(R.drawable.spinner))
             .into(detailImageView)
 
-        detailPriceTextView.text = "${String.format("$.4f", data.quotes[0].price)}"
+        detailPriceTextView.text = "$${String.format("%.4f", data.quotes[0].price)}"
 
         if (data.quotes!![0].percentChange24h > 0) {
             detailChangeTextView.setTextColor(requireContext().resources.getColor(R.color.green))
@@ -114,10 +164,10 @@ class DetailsFragment : Fragment() {
         detaillChartWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
         detaillChartWebView.loadUrl(
-            "https://s.tradingview.com/widgetembed..." + item.symbol
-                .toString() + "USD&interval=" + s + "&hidesidetoolbar=1&hidetoptoolbar=1&symboledit=1&saveimage=1&toolbarbg=F1F3F6&studies=[]" +
-                    "&hideideas=1&theme=Dark&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}" +
-                    "&enabled_features=[]&disabled_features=[]&locale=en&utm_source=coinmarketcap.com&utm_medium=widget&utm_campaign=chart&utm_term=BTCUSDT"
+            "https://s.tradingview.com/widgetembed/?frameElementId=tradingview_76d87&symbol=" + item.symbol
+                .toString() + "USD&interval=${s}&hidesidetoolbar=1&hidetoptoolbar=1&symboledit=1&saveimage=1&toolbarbg=" +
+                    "F1F3F6&studies=[]&hideideas=1&theme=Dark&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=" +
+                    "[]&disabled_features=[]&locale=en&utm_source=coinmarketcap.com&utm_medium=widget&utm_campaign=chart&utm_term=BTCUSDT"
         )
     }
 

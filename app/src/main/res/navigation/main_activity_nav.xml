@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_activity_nav"
-
-    app:startDestination="@id/HomeFragment">
+    app:startDestination="@id/homeFragment">
     <fragment
-        android:id="@+id/HomeFragment"
+        android:id="@+id/homeFragment"
         android:name="com.example.coinsapp.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
@@ -17,13 +16,21 @@
     <fragment
         android:id="@+id/marketFragment"
         android:name="com.example.coinsapp.fragment.MarketFragment"
-        android:label="StatisticFragment"
-        tools:layout="@layout/fragment_market"/>
+        android:label="marketFragment"
+        tools:layout="@layout/fragment_market">
+        <action
+            android:id="@+id/action_marketFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/watchListFragment"
         android:name="com.example.coinsapp.fragment.WatchListFragment"
-        android:label="BookFragment"
-        tools:layout="@layout/fragment_watch_list"/>
+        android:label="watchListFragment"
+        tools:layout="@layout/fragment_watch_list">
+        <action
+            android:id="@+id/action_watchListFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.coinsapp.fragment.DetailsFragment"
