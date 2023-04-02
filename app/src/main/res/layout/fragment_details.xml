@@ -210,7 +210,14 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detailChart"
+        >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/AllDetail"
         android:layout_width="match_parent"
@@ -224,20 +231,114 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailChart">
+        app:layout_constraintTop_toTopOf="parent">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/detailRecyclerView"
+        <TextView
+            android:id="@+id/coin_name"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="20dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/top_gainers_bg"
+            android:paddingHorizontal="3dp"
+            android:text=""
+            android:textColor="@color/light"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/coin_market_cap"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/top_gainers_bg"
+            android:paddingHorizontal="3dp"
+            android:text=""
+            android:textColor="@color/light"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coin_name" />
+
+        <TextView
+            android:id="@+id/coin_volume"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:paddingHorizontal="3dp"
+            android:text=""
+            android:background="@drawable/top_gainers_bg"
+            android:textColor="@color/light"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coin_market_cap" />
+
+        <TextView
+            android:id="@+id/coin_turnover"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:paddingHorizontal="3dp"
+            android:background="@drawable/top_gainers_bg"
+            android:layout_margin="5dp"
+            android:text=""
+            android:textColor="@color/light"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coin_volume" />
+
+        <TextView
+            android:id="@+id/coin_dominance"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:paddingHorizontal="3dp"
+            android:text=""
+            android:background="@drawable/top_gainers_bg"
+            android:textColor="@color/light"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coin_turnover" />
+
+        <TextView
+            android:id="@+id/coin_last_update"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:paddingHorizontal="3dp"
+            android:background="@drawable/top_gainers_bg"
+            android:text=""
+            android:textColor="@color/light"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coin_dominance" />
+
+        <TextView
+            android:id="@+id/coin_tags"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="3dp"
+            android:background="@drawable/top_gainers_bg"
+            android:text=""
+            android:textColor="@color/light"
+            android:layout_margin="5dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coin_last_update" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

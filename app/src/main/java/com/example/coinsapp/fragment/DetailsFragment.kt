@@ -39,8 +39,8 @@ class DetailsFragment : Fragment() {
         loadChart(data)
         setButtonOnClick(data)
         addToWatchList()
-
     }
+
     var watchList: ArrayList<String>? = null
     var watchListChecked = false
     private fun addToWatchList() {
@@ -88,6 +88,13 @@ class DetailsFragment : Fragment() {
     }
     fun setUpDetails(data: CryptoCurrency) {
         detailSymbolTextView.text = data.symbol
+        coin_name.text = "Name:  ${data.name}"
+        coin_market_cap.text = "Market Cap:  $${String.format("%.2f", data.quotes[0].marketCap)}"
+        coin_volume.text = "Volume24h:  $${String.format("%.2f", data.quotes[0].volume24h)}"
+        coin_last_update.text = "Last Updated:  ${data.lastUpdated}"
+        coin_dominance.text = "Dominance:  ${String.format("%.2f", data.quotes[0].dominance)} %"
+    coin_turnover.text = "Turnover:  ${String.format("%.2f", data.quotes[0].turnover)} %"
+        coin_tags.text = "Tags:  ${data.tags}"
 
         Glide.with(requireContext())
             .load("http://s2.coinmarketcap.com/static/img/coins/64x64/" + data.id + ".png")
