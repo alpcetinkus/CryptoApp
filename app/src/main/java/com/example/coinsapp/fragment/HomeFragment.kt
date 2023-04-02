@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.coinsapp.R
 import com.example.coinsapp.adapter.HomeAdapter
@@ -16,8 +15,8 @@ import com.example.coinsapp.adapter.TopLossGainPagerAdapter
 import com.example.coinsapp.model.CryptoCurrency
 import com.example.coinsapp.model.MarketModel
 import com.example.coinsapp.service.RetrofitClient
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,30 +28,23 @@ class HomeFragment : Fragment() {
     private lateinit var coinHomeList: MutableList<CryptoCurrency>
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var topCurrencyRecyclerView : RecyclerView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var contentViewPager: ViewPager2
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        topCurrencyRecyclerView = view?.findViewById(R.id.topCurrencyRecyclerView)!!
+        topCurrencyRecyclerView = view.findViewById(R.id.topCurrencyRecyclerView)
+        contentViewPager = view.findViewById(R.id.contentViewPager)
         coinHomeList = ArrayList()
         homeAdapter = HomeAdapter(mContext,coinHomeList)
         topCurrencyRecyclerView.adapter = homeAdapter
         fetchMarketList()
         setTabLayout()
-
     }
-
     fun fetchMarketList() {
-
         RetrofitClient.getApiImplementation().getMarketData().enqueue(object : Callback<MarketModel> {
             override fun onResponse(call: Call<MarketModel>?, response: Response<MarketModel>?) {
 
@@ -77,9 +69,8 @@ class HomeFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
-
-
     fun setTabLayout() {
+
         val adapter = TopLossGainPagerAdapter(this)
         contentViewPager.adapter = adapter
         contentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -96,14 +87,14 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-        TabLayoutMediator(tabLayout,contentViewPager) {
-        tab, position ->
-            var title = if(position == 0) {
-                "Top Gains"
+        TabLayoutMediator(tabLayout, contentViewPager) { tab, position ->
+            var title = if (position == 0) {
+                "GAINS"
             } else {
-                "Top Losers"
+                "LOSERS"
             }
             tab.text = title
         }.attach()
+
     }
-}
+    }
