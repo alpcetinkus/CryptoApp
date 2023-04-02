@@ -32,7 +32,6 @@ class TopLoseGainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_top_lose_gain, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,17 +55,16 @@ class TopLoseGainFragment : Fragment() {
                 if (response != null) {
                     val responseBody = response.body()?.data?.cryptoCurrencyList
                     for (coin in responseBody!!) {
-                        if (arguments?.getInt("position") == 0) {  // Top Gainers
-                            if (coin.quotes[0].percentChange24h > 0) {  // Artışta olan coinleri ekle
+                        if (arguments?.getInt("position") == 0) {
+                            if (coin.quotes[0].percentChange24h > 0) {
                                 marketList.add(coin)
                             }
                         } else {  // Top Losers
-                            if (coin.quotes[0].percentChange24h < 0) {  // Düşüşte olan coinleri ekle
+                            if (coin.quotes[0].percentChange24h < 0) {
                                 marketList.add(coin)
                             }
                         }
                     }
-
                 }
                 marketAdapter.notifyDataSetChanged()
             }

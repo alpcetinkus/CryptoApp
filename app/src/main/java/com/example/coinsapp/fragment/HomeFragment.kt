@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.coinsapp.R
 import com.example.coinsapp.adapter.HomeAdapter
-import com.example.coinsapp.adapter.TopLossGainPagerAdapter
+import com.example.coinsapp.adapter.TopLoseGainPagerAdapter
 import com.example.coinsapp.model.CryptoCurrency
 import com.example.coinsapp.model.MarketModel
 import com.example.coinsapp.service.RetrofitClient
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,6 +40,7 @@ class HomeFragment : Fragment() {
         coinHomeList = ArrayList()
         homeAdapter = HomeAdapter(mContext,coinHomeList)
         topCurrencyRecyclerView.adapter = homeAdapter
+
         fetchMarketList()
         setTabLayout()
     }
@@ -55,10 +55,8 @@ class HomeFragment : Fragment() {
                     }
                 }
                 homeAdapter.notifyDataSetChanged()
-
             }
             override fun onFailure(call: Call<MarketModel>?, t: Throwable?) {
-
                 Log.e("alppppp", "Failed::" + (t))
             }
         })
@@ -71,7 +69,7 @@ class HomeFragment : Fragment() {
     }
     fun setTabLayout() {
 
-        val adapter = TopLossGainPagerAdapter(this)
+        val adapter = TopLoseGainPagerAdapter(this)
         contentViewPager.adapter = adapter
         contentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 
@@ -95,6 +93,5 @@ class HomeFragment : Fragment() {
             }
             tab.text = title
         }.attach()
-
     }
-    }
+}

@@ -36,23 +36,21 @@ class MarketAdapter(private var mContext: Context, var type: String, var marketl
     override fun onBindViewHolder(holder: marketListDesign, position: Int) {
         val coin = marketlist[position]
         Glide.with(mContext)
-            .load("http://s2.coinmarketcap.com/static/img/coins/64x64/" + coin.id + ".png")
-            .thumbnail(Glide.with(mContext).load(R.drawable.spinner))
+            .load("https://s2.coinmarketcap.com/static/img/coins/64x64/" + coin.id + ".png")
+//            .thumbnail(Glide.with(mContext).load(R.drawable.spinner))
             .into(holder.itemView.currencyImageView)
 
         Glide.with(mContext)
-            .load("http://s3.coinmarketcap.com/generated/sparklines/web/7d/usd/" + coin.id + ".png")
-            .thumbnail(Glide.with(mContext).load(R.drawable.spinner))
+            .load("https://s3.coinmarketcap.com/generated/sparklines/web/7d/usd/" + coin.id + ".png")
+//            .thumbnail(Glide.with(mContext).load(R.drawable.spinner))
             .into(holder.itemView.currencyChartImageView)
 
-        if (coin.quotes!![0].percentChange24h > 0) {
+        if (coin.quotes!![0].percentChange24h > 0.0) {
             holder.itemView.currencyChangeTextView.setTextColor(mContext.resources.getColor(R.color.green))
-//            holder.itemView.detailChangeImageView.setImageResource(R.drawable.ic_caret_up)
             holder.itemView.currencyChangeTextView.text =
                 "+ ${String.format("%.02f", coin.quotes[0].percentChange24h)} %"
         } else {
             holder.itemView.currencyChangeTextView.setTextColor(mContext.resources.getColor(R.color.red))
-//            holder.itemView.detailChangeImageView.setImageResource(R.drawable.ic_caret_down)
             holder.itemView.currencyChangeTextView.text =
                 "${String.format("%.02f", coin.quotes[0].percentChange24h)} %"
         }

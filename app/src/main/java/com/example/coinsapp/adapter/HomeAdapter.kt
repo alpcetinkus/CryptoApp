@@ -27,7 +27,7 @@ class HomeAdapter(private var mContext: Context, private val coinhomelist: List<
 
     override fun onBindViewHolder(holder: homeListDesign, position: Int) {
         val coin = coinhomelist[position]
-        Glide.with(mContext).load("http://s2.coinmarketcap.com/static/img/coins/64x64/" + coin.id + ".png")
+        Glide.with(mContext).load("https://s2.coinmarketcap.com/static/img/coins/64x64/" + coin.id + ".png")
             .into(holder.itemView.topCurrencyImageView)
 
         if (coin.quotes!![0].percentChange24h > 0) {

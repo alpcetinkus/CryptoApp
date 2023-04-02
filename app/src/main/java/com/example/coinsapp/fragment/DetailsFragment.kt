@@ -97,7 +97,7 @@ class DetailsFragment : Fragment() {
         coin_tags.text = "Tags:  ${data.tags}"
 
         Glide.with(requireContext())
-            .load("http://s2.coinmarketcap.com/static/img/coins/64x64/" + data.id + ".png")
+            .load("https://s2.coinmarketcap.com/static/img/coins/64x64/" + data.id + ".png")
             .thumbnail(Glide.with(requireContext()).load(R.drawable.spinner))
             .into(detailImageView)
 

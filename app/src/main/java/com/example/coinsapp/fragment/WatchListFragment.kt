@@ -23,21 +23,19 @@ class WatchListFragment : Fragment() {
     private lateinit var watchList: ArrayList<String>
     private lateinit var watchListItem: ArrayList<CryptoCurrency>
     private lateinit var watchlistRecyclerView : RecyclerView
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_watch_list, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        watchlistRecyclerView = view?.findViewById(R.id.watchlistRecyclerView)!!
+        watchlistRecyclerView = view.findViewById(R.id.watchlistRecyclerView)
+
         readData()
         fetchWatchList()
     }
-
     fun fetchWatchList() {
         RetrofitClient.getApiImplementation().getMarketData().enqueue(object :
             Callback<MarketModel> {
@@ -57,7 +55,6 @@ class WatchListFragment : Fragment() {
                     watchlistRecyclerView.adapter = MarketAdapter(requireContext(), "watchlistfragment", watchListItem)
                 }
             }
-
             override fun onFailure(call: Call<MarketModel>?, t: Throwable?) {
 
                 Log.e("alppppp", "Failed::" + (t))
